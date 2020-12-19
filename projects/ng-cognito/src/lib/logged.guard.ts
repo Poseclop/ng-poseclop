@@ -9,21 +9,21 @@ import { CognitoService } from './cognito.service';
 export class LoggedGuard implements CanActivate {
 
   constructor(
-    private _cognito: CognitoService,
-    private _router: Router,
+    private cognito: CognitoService,
+    private router: Router,
     @Inject('config') private config: ICognitoGuardsConfig
   ) { }
 
   canActivate(
     _: ActivatedRouteSnapshot,
     __: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this._cognito.logged$.pipe(
+    return this.cognito.logged$.pipe(
       take(1),
       map(logged => {
         if (logged) {
           return true;
         }
-        return this._router.createUrlTree(this.config.loggedOut || ['/']);
+        return this.router.createUrlTree(this.config.loggedOut || ['/']);
       })
     );
   }

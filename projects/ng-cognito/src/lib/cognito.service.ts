@@ -23,15 +23,15 @@ export type GetCurrentSessionResponse = 'SUCCESS' | 'NO_USER_IN$session' | 'SESS
 export class CognitoService {
 
   /** Cognito User Session */
-  private $session: CognitoUserSession | null = null;
+  private Session: CognitoUserSession | null = null;
   get session(): CognitoUserSession | null {
-    return this.$session || null;
+    return this.Session || null;
   }
 
   /** Cognito User Session observable */
-  private $session$ = new BehaviorSubject<CognitoUserSession | null>(null);
+  private Session$ = new BehaviorSubject<CognitoUserSession | null>(null);
   get session$(): Observable<CognitoUserSession | null> {
-    return this.$session$.asObservable();
+    return this.Session$.asObservable();
   }
 
   /** Cognito JWT Token */
@@ -161,8 +161,8 @@ export class CognitoService {
 
           cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: cognitoUserSession => {
-              this.$session = cognitoUserSession;
-              this.$session$.next(cognitoUserSession);
+              this.Session = cognitoUserSession;
+              this.Session$.next(cognitoUserSession);
               // TODO Manage new credentials https://www.npmjs.com/package/amazon-cognito-identity-js
               resolve('SUCCESS');
             },
@@ -198,8 +198,8 @@ export class CognitoService {
               if (error) {
                 reject(error);
               } else if (session && session.isValid()) {
-                this.$session = session;
-                this.$session$.next(session);
+                this.Session = session;
+                this.Session$.next(session);
                 resolve('SUCCESS');
               }
 
@@ -232,8 +232,8 @@ export class CognitoService {
           } else {
             cognitoUser.completeNewPasswordChallenge(authenticationDetailsData.Password, null, {
               onSuccess: userSession => {
-                this.$session = userSession;
-                this.$session$.next(userSession);
+                this.Session = userSession;
+                this.Session$.next(userSession);
                 resolve();
               },
               onFailure: error => {
@@ -261,8 +261,8 @@ export class CognitoService {
 
           if (cognitoUser) {
             cognitoUser.signOut();
-            this.$session = null;
-            this.$session$.next(null);
+            this.Session = null;
+            this.Session$.next(null);
             resolve();
           } else {
             reject('No user signed in');
