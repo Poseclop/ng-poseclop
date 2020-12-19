@@ -82,6 +82,46 @@
           }
         }
       }
+    },
+    "ng-get-pipe": {
+      "projectType": "library",
+      "root": "projects/ng-get-pipe",
+      "sourceRoot": "projects/ng-get-pipe/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-get-pipe/tsconfig.lib.json",
+            "project": "projects/ng-get-pipe/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-get-pipe/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-get-pipe/src/test.ts",
+            "tsConfig": "projects/ng-get-pipe/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-get-pipe/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-get-pipe/tsconfig.lib.json",
+              "projects/ng-get-pipe/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-cognito"

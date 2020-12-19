@@ -27,6 +27,10 @@
       "ng-typed-form": [
         "dist/ng-typed-form/ng-typed-form",
         "dist/ng-typed-form"
+      ],
+      "ng-get-pipe": [
+        "dist/ng-get-pipe/ng-get-pipe",
+        "dist/ng-get-pipe"
       ]
     }
   },
