@@ -3,5 +3,86 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "ng-cognito": {
+      "projectType": "library",
+      "root": "projects/ng-cognito",
+      "sourceRoot": "projects/ng-cognito/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-cognito/tsconfig.lib.json",
+            "project": "projects/ng-cognito/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-cognito/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-cognito/src/test.ts",
+            "tsConfig": "projects/ng-cognito/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-cognito/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-cognito/tsconfig.lib.json",
+              "projects/ng-cognito/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ng-typed-form": {
+      "projectType": "library",
+      "root": "projects/ng-typed-form",
+      "sourceRoot": "projects/ng-typed-form/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-typed-form/tsconfig.lib.json",
+            "project": "projects/ng-typed-form/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-typed-form/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-typed-form/src/test.ts",
+            "tsConfig": "projects/ng-typed-form/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-typed-form/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-typed-form/tsconfig.lib.json",
+              "projects/ng-typed-form/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ng-cognito"
 }
