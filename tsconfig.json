@@ -31,6 +31,10 @@
       "ng-get-pipe": [
         "dist/ng-get-pipe/ng-get-pipe",
         "dist/ng-get-pipe"
+      ],
+      "ng-responsive-ui": [
+        "dist/ng-responsive-ui/ng-responsive-ui",
+        "dist/ng-responsive-ui"
       ]
     }
   },

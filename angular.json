@@ -122,7 +122,169 @@
           }
         }
       }
+    },
+    "ng-play-around": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/ng-play-around",
+      "sourceRoot": "projects/ng-play-around/src",
+      "prefix": "play-around",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ng-play-around",
+            "index": "projects/ng-play-around/src/index.html",
+            "main": "projects/ng-play-around/src/main.ts",
+            "polyfills": "projects/ng-play-around/src/polyfills.ts",
+            "tsConfig": "projects/ng-play-around/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/ng-play-around/src/favicon.ico",
+              "projects/ng-play-around/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/ng-play-around/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/ng-play-around/src/environments/environment.ts",
+                  "with": "projects/ng-play-around/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ng-play-around:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ng-play-around:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ng-play-around:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-play-around/src/test.ts",
+            "polyfills": "projects/ng-play-around/src/polyfills.ts",
+            "tsConfig": "projects/ng-play-around/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-play-around/karma.conf.js",
+            "assets": [
+              "projects/ng-play-around/src/favicon.ico",
+              "projects/ng-play-around/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/ng-play-around/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-play-around/tsconfig.app.json",
+              "projects/ng-play-around/tsconfig.spec.json",
+              "projects/ng-play-around/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/ng-play-around/e2e/protractor.conf.js",
+            "devServerTarget": "ng-play-around:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ng-play-around:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "ng-responsive-ui": {
+      "projectType": "library",
+      "root": "projects/ng-responsive-ui",
+      "sourceRoot": "projects/ng-responsive-ui/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-responsive-ui/tsconfig.lib.json",
+            "project": "projects/ng-responsive-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-responsive-ui/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-responsive-ui/src/test.ts",
+            "tsConfig": "projects/ng-responsive-ui/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-responsive-ui/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-responsive-ui/tsconfig.lib.json",
+              "projects/ng-responsive-ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
-  "defaultProject": "ng-cognito"
+  "defaultProject": "ng-play-around"
 }
