@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ResponsiveUiService } from './responsive-ui.service';
 
 @Component({
   selector: 'play-around-root',
@@ -8,8 +7,4 @@ import { ResponsiveUiService } from './responsive-ui.service';
 })
 export class AppComponent {
   title = 'ng-play-around';
-
-  constructor(
-    private rs: ResponsiveUiService
-  ) { }
 }
