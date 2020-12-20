@@ -1,5 +1,5 @@
 {
-  "name": "@poseclop/cognito",
+  "name": "@poseclop/ng-cognito",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^11.0.5",
