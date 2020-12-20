@@ -35,6 +35,10 @@
       "ng-responsive-ui": [
         "dist/ng-responsive-ui/ng-responsive-ui",
         "dist/ng-responsive-ui"
+      ],
+      "ng-one-pager": [
+        "dist/ng-one-pager/ng-one-pager",
+        "dist/ng-one-pager"
       ]
     }
   },

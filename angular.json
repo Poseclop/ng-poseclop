@@ -284,6 +284,46 @@
           }
         }
       }
+    },
+    "ng-one-pager": {
+      "projectType": "library",
+      "root": "projects/ng-one-pager",
+      "sourceRoot": "projects/ng-one-pager/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-one-pager/tsconfig.lib.json",
+            "project": "projects/ng-one-pager/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-one-pager/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-one-pager/src/test.ts",
+            "tsConfig": "projects/ng-one-pager/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-one-pager/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-one-pager/tsconfig.lib.json",
+              "projects/ng-one-pager/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-play-around"
