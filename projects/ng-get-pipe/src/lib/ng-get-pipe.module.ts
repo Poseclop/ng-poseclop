@@ -1,11 +1,9 @@
-import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { GetPipe } from './get.pipe';
 
 
 @NgModule({
   declarations: [GetPipe],
-  imports: [HttpClientModule],
   exports: [GetPipe]
 })
 export class NgGetPipeModule {
