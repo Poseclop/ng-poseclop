@@ -1,5 +1,4 @@
 # NgResponsiveUi
----
 
 This library provides a service and 2 directives to implement [Material Design Responsive Layout](https://material.io/design/layout/responsive-layout-grid.html#columns-gutters-and-margins) in your angular application.
 
