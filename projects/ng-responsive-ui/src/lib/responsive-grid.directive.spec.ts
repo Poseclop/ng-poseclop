@@ -1,6 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
 import { ComponentFixture, TestBed, TestBedStatic, waitForAsync } from '@angular/core/testing';
-import { ResponsiveUiService } from 'projects/ng-play-around/src/app/responsive-ui.service';
+import { ResponsiveUiService } from './ng-responsive-ui.service';
 import { combineLatest } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ResponsiveGridDirective } from './responsive-grid.directive';
