@@ -1,3 +1,7 @@
+/**
+ * INSPIRED FROM https://gist.github.com/dmorosinotto/76a9272b5c45af1f78a61e7894df5777#file-typedforms-d-ts
+ */
+
 import { ValidatorFn } from '@angular/forms';
 
 // * BASIC DATA TYPES

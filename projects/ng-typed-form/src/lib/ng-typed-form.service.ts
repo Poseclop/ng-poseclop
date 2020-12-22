@@ -95,7 +95,7 @@ export class NgTypedFormService {
           break;
         case 'object':
           // @ts-ignore
-          if (group[k] === null) {
+          if (defaultValue[k] === null) {
             // @ts-ignore
             group[k] = this.generateTypedFormControl(defaultValue[k], abstractConfig, k);
             // @ts-ignore

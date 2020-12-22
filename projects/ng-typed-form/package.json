@@ -1,9 +1,24 @@
 {
   "name": "@poseclop/ng-typed-form",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "description": "An angular service to provide typed reactive forms in applications",
+  "keywords": [
+    "angular",
+    "typescript",
+    "reactive forms"
+  ],
   "peerDependencies": {
     "@angular/common": "^11.0.5",
     "@angular/core": "^11.0.5"
+  },
+  "homepage": "https://github.com/Poseclop/ng-poseclop/tree/main/projects/ng-typed-form",
+  "bugs": {
+    "url": "https://github.com/Poseclop/ng-poseclop/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Benoit TASSIN",
+    "url": "http://www.benoit-tassin.ch"
   },
   "dependencies": {
     "tslib": "^2.0.0"
