@@ -1,0 +1,71 @@
+<!-- * LAYOUT FOR DESKTOP -->
+<ng-container *ngIf="desktopLayout$ | async; else mobileTemplate">
+    <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    <main>
+        <router-outlet (activate)="onNavigation()"></router-outlet>
+    </main>
+    <ng-container *ngTemplateOutlet="footer"></ng-container>
+</ng-container>
+
+<!-- * LAYOUT FOR TABLET AND MOBILE -->
+<ng-template #mobileTemplate>
+    <mat-drawer-container>
+        <mat-drawer></mat-drawer>
+        <mat-drawer-content>
+            <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+            <main>
+                <router-outlet (activate)="onNavigation()"></router-outlet>
+            </main>
+            <ng-container *ngTemplateOutlet="footer"></ng-container>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</ng-template>
+
+<!-- * APPLICATION TOOLBAR -->
+<ng-template #toolbar>
+    <header>
+        <mat-toolbar class="app-toolbar mat-elevation-z3">
+            <a routerLinkActive=" active" [routerLink]="['/', coreRoutes.ACCUEIL]" mat-button>Accueil</a>
+            <a routerLinkActive="active" [routerLink]="['/', coreRoutes.EQUIPE]" mat-button>L'équipe</a>
+            <a routerLinkActive="active" [routerLink]="['/', coreRoutes.INTERVENTIONS]" mat-button>Interventions</a>
+            <a routerLinkActive="active" [routerLink]="['/', coreRoutes.ACCUEIL]" mat-button class="logo-link">
+                <img class="logo" src="assets/img/logo.png" alt="Logo">
+            </a>
+            <a routerLinkActive="active" [routerLink]="['/', coreRoutes.PATHOLOGIES]" mat-button>Pathologies</a>
+            <a routerLinkActive="active" [routerLink]="['/', coreRoutes.FAQ]" mat-button>FAQ</a>
+            <a routerLinkActive="active" [routerLink]="['/', coreRoutes.CONTACT_RDV]" mat-button>Contact & RDV</a>
+        </mat-toolbar>
+    </header>
+</ng-template>
+
+<!-- * APPLICATION FOOTER -->
+<ng-template #footer>
+    <footer>
+        <mat-divider></mat-divider>
+        <div class="footer-content" responsiveContainer [maxWidth]="1400" [verticalMargin]="0" fxLayout="column" fxLayoutAlign="space-between center"
+            [ngStyle]="{'padding.px': responsiveUiService.gutter$ | async }">
+            <div [ngStyle]="{'width.%': 100}" fxLayoutAlign="space-between start">
+                <div>
+                    <strong>Cabinet Roi René</strong>
+                    <div [ngStyle]="{'margin-top.rem': 1}" fxLayoutAlign="space-between center" fxLayoutGap="2rem">
+                        <a routerLinkActive="active" [routerLink]="['/', coreRoutes.ACCUEIL]" mat-button>Accueil</a>
+                        <a routerLinkActive="active" [routerLink]="['/', coreRoutes.EQUIPE]" mat-button>L'équipe</a>
+                        <a routerLinkActive="active" [routerLink]="['/', coreRoutes.INTERVENTIONS]" mat-button>Interventions</a>
+                        <a routerLinkActive="active" [routerLink]="['/', coreRoutes.PATHOLOGIES]" mat-button>Pathologies</a>
+                        <a routerLinkActive="active" [routerLink]="['/', coreRoutes.FAQ]" mat-button>FAQ</a>
+                        <a routerLinkActive="active" [routerLink]="['/', coreRoutes.CONTACT_RDV]" mat-button>Contact & RDV</a>
+                    </div>
+                </div>
+                <span fxFlex="1 1 100%"></span>
+                <img src="/assets/img/logo.png" alt="logo">
+            </div>
+            <div class="sub" fxLayoutGap=".5rem">
+                <span>Site Web</span>
+                <span>Benoit TASSIN</span>
+                <span> - </span>
+                <span>Photos</span>
+                <span>Jean DUPONT</span>
+            </div>
+        </div>
+    </footer>
+</ng-template>

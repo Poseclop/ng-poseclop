@@ -1,0 +1,74 @@
+@use '~@angular/material/theming';
+
+header { 
+    height: 11rem; 
+    position: fixed; 
+    width: 100%; 
+    z-index: 10;
+}
+
+
+.app-toolbar {
+  background-color: white;
+  height: 100%;
+  justify-content: center;
+  border-bottom: 1px solid lightgray;
+
+  .logo {
+    height: 100%;
+  }
+}
+
+::ng-deep .app-toolbar {
+    .mat-button-wrapper {
+        height: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    a {
+        color: gray;
+        height: 100%;
+        
+
+        &.active {
+            color: theming.mat-color(theming.$mat-teal, 700);
+            font-weight: 500;
+        }
+
+        &.logo-link .mat-button-wrapper {
+            height: 100%;
+        }
+    }
+}
+
+main {
+    padding-top: 11rem;
+    min-height: calc(100% - 17.5rem - 11rem);
+}
+
+footer {
+    height: 17.5rem;
+
+    .footer-content {
+        height: 100%;
+
+        strong {
+            font-size: 1.6rem;
+            font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+            padding-left: 16px;
+        }
+
+        img {
+            height: 8rem;
+        }
+
+        .sub {
+            width: max-content;
+            margin: 0 auto;
+            color: grey;
+            font-size: 1.2rem;
+        }
+    }
+}

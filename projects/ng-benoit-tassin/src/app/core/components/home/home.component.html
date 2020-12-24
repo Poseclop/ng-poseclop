@@ -1,0 +1,86 @@
+<title>Home page</title>
+<main>
+    <header>
+        <div [ngClass]="ds.containerClasses">
+            <h1>Developpeur Web</h1>
+            <p>Création de sites et applications web</p>
+        </div>
+    </header>
+
+    <article class="front-end">
+        <h2>Developpement Front End</h2>
+        <div [ngClass]="ds.containerClasses">
+            <header>
+                <p>
+                    Nous utilisons les dernière technologies web pour créer des sites performant et adaptés aussi bien aux mobiles qu'aux écrans haute résolution. De plus, nous utilisons des
+                    techniques de SEO pour optimiser le référencement naturel de votre site.
+                </p>
+                <span></span>
+                <strong>Placez votre curseur sur les différents outils front-end ci-dessous pour voir comment ils sont utilisés pour créer votre site.</strong>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+                <span></span>
+                <mat-divider></mat-divider>
+            </header>
+            <section class="tools">
+                <button mat-button inline (mouseenter)="currentCard.next('html')" (mouseleave)="currentCard.next('default')" (click)="onCardClick('html')">
+                    HTML<mat-icon svgIcon="html5" aria-hidden="false" aria-label="html5 icon"></mat-icon>
+                </button>
+                <button mat-button inline (mouseenter)="currentCard.next('javascript')" (mouseleave)="currentCard.next('default')" (click)="onCardClick('javascript')">
+                    JAVASCRIPT<mat-icon svgIcon="javascript" aria-hidden="false" aria-label="javascript icon"></mat-icon>
+                </button>
+                <button mat-button inline (mouseenter)="currentCard.next('css')" (mouseleave)="currentCard.next('default')" (click)="onCardClick('css')">
+                    CSS<mat-icon svgIcon="css" aria-hidden="false" aria-label="css3 icon"></mat-icon>
+                </button>
+                <button mat-button inline (mouseenter)="currentCard.next('photoshop')" (mouseleave)="currentCard.next('default')" (click)="onCardClick('photoshop')">
+                    PHOTOSHOP<mat-icon svgIcon="photoshop" aria-hidden="false" aria-label="photoshop icon"></mat-icon>
+                </button>
+                <button mat-button inline (mouseenter)="currentCard.next('material')" (mouseleave)="currentCard.next('default')" (click)="onCardClick('material')">
+                    MATERIAL<mat-icon svgIcon="material_design" aria-hidden="false" aria-label="Material Design icon"></mat-icon>
+                </button>
+                <button mat-button inline (mouseenter)="currentCard.next('angular')" (mouseleave)="currentCard.next('default')" (click)="onCardClick('angular')">
+                    ANGULAR<mat-icon svgIcon="angular" aria-hidden="false" aria-label="angular icon"></mat-icon>
+                </button>
+                <button mat-button inline (mouseenter)="currentCard.next('d3')" (mouseleave)="currentCard.next('default')" (click)="onCardClick('d3')">
+                    D3<mat-icon svgIcon="d3" aria-hidden="false" aria-label="d3 icon"></mat-icon>
+                </button>
+                <button mat-button inline (mouseenter)="currentCard.next('pwa')" (mouseleave)="currentCard.next('default')" (click)="onCardClick('pwa')">
+                    PWA<mat-icon svgIcon="pwa" aria-hidden="false" aria-label="pwa icon"></mat-icon>
+                </button>
+            </section>
+            <section class="tool-detail" *ngIf="!(smallScreen$ | async)">
+                <div class="container" [@switchPicture]="currentCard.value">
+                    <div class="image-container">
+                        <img src="assets/img/{{shownCard.picture}}" alt="detail image">
+                    </div>
+                    <h3 *ngIf="shownCard.title">
+                        {{shownCard.title}}
+                        <mat-icon svgIcon="{{shownCard.icon}}" aria-hidden="false" aria-label="html5 icon"></mat-icon>
+                    </h3>
+                    <div *ngIf="shownCard.paragraphs" class="info-description">
+                        <p *ngFor="let paragraph of shownCard.paragraphs">{{paragraph}}</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </article>
+
+    <div class="parallax parallax-image--1"></div>
+
+    <article class="back-end">
+        <div fxLayoutAlign="end center">
+            <h2>Dévelopement Back-End</h2>
+        </div>
+        <div [ngClass]="ds.containerClasses">
+            <div class="cards">
+                <mat-card *ngFor="let card of backEndCardDetails | keyvalue">
+                    <mat-card-title>{{card.value.title}}</mat-card-title>
+                    <img mat-card-image src="/assets/img/{{card.value.picture}}" alt="{{card.value.title}} image">
+                    <mat-card-content fxLayout="column" fxLayoutAlign="start center">
+                        <mat-icon svgIcon="{{card.value.svgIcon}}">{{card.value.icon}}</mat-icon>
+                        <p *ngFor="let paragraph of card.value.paragraphs">{{paragraph}}</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </article>
+</main>

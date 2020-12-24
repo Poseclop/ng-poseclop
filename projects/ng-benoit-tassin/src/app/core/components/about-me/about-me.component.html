@@ -1,0 +1,86 @@
+<main>
+    <header>
+        <div [ngClass]="ds.containerClasses">
+
+            <section fxLayoutAlign="end center">
+                <div fxLayout="column" fxLayoutAlign="center end">
+                    <h2>Benoit <span>TASSIN</span></h2>
+                    <h4>Full Stack Developper</h4>
+                    <div>
+                        <a mat-icon-button target="_blank" href="https://www.linkedin.com/in/benoit-tassin">
+                            <mat-icon svgIcon="linkedin"></mat-icon>
+                        </a>
+                        <a mat-icon-button target="_blank" href="https://github.com/Poseclop">
+                            <mat-icon svgIcon="github"></mat-icon>
+                        </a>
+                        <a mat-icon-button target="_blank" href="https://www.facebook.com/benoit.tassin1/">
+                            <mat-icon svgIcon="facebook"></mat-icon>
+                        </a>
+                        <a mat-icon-button target="_blank" href="https://www.npmjs.com/~poseclop">
+                            <mat-icon svgIcon="npm"></mat-icon>
+                        </a>
+                    </div>
+                </div>
+                <img class="profile-picture" src="/assets/img/profil.jpg" alt="Photo de profil">
+            </section>
+        </div>
+    </header>
+
+    <div [ngClass]="ds.containerClasses">
+        <p class="description">
+            Touche à tout et grand curieux, j'ai d'abord suivi un cursus dans le management des opération de service avant de commencer ma carrière dans la création de packaging pour le
+            secteur de la grande consommation. A travers plusieurs promotions, mon parcour s'est ensuite orienté vers le management de projets mêlé au rôle d'analyste. En 2018, j'ai décidé de
+            changer de carrière et de me reconvertir dans la programmation, suivant mes premières passions. Depuis 2019, je travaille comme Développeur Analyste chez Opale Solutions, leader
+            en Suisse dans la production de software administratif pour le secteur de la santé.
+        </p>
+    </div>
+
+    <article class="steps">
+        <h2 #title>Mon parcour</h2>
+        <div [ngClass]="ds.containerClasses">
+            <img [@switchPicture]="stepper.selectedIndex" src="/assets/img/{{experiences[imageExperienceIndex].image}}{{(smallScreen$ | async) ? '_small' : ''}}.png"
+                alt="{{experiences[imageExperienceIndex].title}} image">
+            <section>
+                <mat-vertical-stepper class="experiences-stepper" (selectionChange)="onSelectionChange($event)" (animationDone)="onStepAnimationDone(title)" #stepper>
+                    <mat-step *ngFor="let experience of experiences" [completed]="false">
+                        <ng-template matStepLabel>
+                            <div fxLayoutAlign="space-between center" (click)="onStepClick(title)">
+                                <h3>
+                                    <span>
+                                        <ng-container *ngIf="smallScreen$ | async; else desktopFromTemplate">
+                                            {{experience.dateFrom | date:'MM/yyyy' | titlecase}}
+                                        </ng-container>
+                                        <ng-template #desktopFromTemplate>
+                                            {{experience.dateFrom | date:'MMM yyyy' | titlecase}}
+                                        </ng-template>
+                                        <ng-container *ngIf="experience.dateTo">
+                                            <ng-container *ngIf="smallScreen$ | async; else desktopToTemplate">
+                                                &nbsp;- {{experience.dateTo | date:'MM/yyyy' | titlecase}}
+                                            </ng-container>
+                                            <ng-template #desktopToTemplate>
+                                                &nbsp;- {{experience.dateTo | date:'MMM yyyy' | titlecase}}
+                                            </ng-template>
+                                        </ng-container> :
+                                    </span>
+                                    {{experience.title}}
+                                </h3>
+                                <h4 *ngIf="!(smallScreen$ | async)">{{experience.subTitle}}</h4>
+                            </div>
+                        </ng-template>
+                        <h4 class="mobile-subtitle" *ngIf="smallScreen$ | async">{{experience.subTitle}}</h4>
+                        <p *ngFor="let paragraph of experience.content">{{paragraph}}</p>
+                    </mat-step>
+                    <ng-template matStepperIcon="index" let-index="index">
+                        <mat-icon>{{index}}</mat-icon>
+                    </ng-template>
+                    <ng-template matStepperIcon="done" let-index="index">
+                        <mat-icon>{{index}}</mat-icon>
+                    </ng-template>
+                </mat-vertical-stepper>
+            </section>
+        </div>
+    </article>
+</main>
+<div>
+    <d3-chronology [chronology]="chronology"></d3-chronology>
+</div>

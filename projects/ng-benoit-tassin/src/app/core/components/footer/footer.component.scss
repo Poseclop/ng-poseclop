@@ -1,0 +1,45 @@
+footer {
+    width: 100%;
+    background-color: #0D0D0D;
+    box-sizing: border-box;
+
+    .container {
+        max-width: 1600px;
+        margin: 0 auto;
+        color: white;
+        padding: 2rem;
+
+        > div {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            @media (max-width: 450px) {
+                justify-content: center;
+            }
+        }
+    }
+
+    .footer-title {
+        font-size: 2.4rem;
+        font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+        font-weight: 700;
+        padding-left: 16px;
+    }
+
+    .ressources {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & > * {
+            font-size: 1.2rem;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        &.small {
+            flex-wrap: wrap;
+        }
+    }
+}

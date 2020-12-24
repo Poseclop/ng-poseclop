@@ -1,0 +1,10 @@
+<h3 [ngClass]="{'small-font': data.title.length > 9 }">
+    <span>{{data.title}}</span>
+    <mat-icon inline svgIcon="{{data.icon}}" aria-hidden="false" aria-label="icon"></mat-icon>
+</h3>
+<img src="assets/img/{{data.picture}}" alt="detail image for {{data.title}}">
+<p *ngFor="let paragraph of data.paragraphs">{{paragraph}}</p>
+<button mat-stroked-button (click)="bottomSheet.dismiss()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+    Revenir
+</button>

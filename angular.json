@@ -350,7 +350,7 @@
               "projects/ng-benoit-tassin/src/assets"
             ],
             "styles": [
-              "projects/ng-benoit-tassin/src/styles.scss"
+              "projects/ng-benoit-tassin/src/styles/main.scss"
             ],
             "scripts": []
           },
@@ -413,7 +413,7 @@
               "projects/ng-benoit-tassin/src/assets"
             ],
             "styles": [
-              "projects/ng-benoit-tassin/src/styles.scss"
+              "projects/ng-benoit-tassin/src/styles/main.scss"
             ],
             "scripts": []
           }

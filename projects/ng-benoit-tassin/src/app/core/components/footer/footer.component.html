@@ -1,0 +1,36 @@
+<footer>
+    <div class="container">
+        <div>
+            <div>
+                <p class="footer-title">BENOIT TASSIN</p>
+                <div fxLayoutGap="2rem">
+                    <a mat-button [routerLink]="['/', 'home']">HOME</a>
+                    <a mat-button [routerLink]="['/', 'about-me']">ABOUT ME</a>
+                    <a mat-button [routerLink]="['/', 'projects']">PROJETS</a>
+                </div>
+            </div>
+            <div *ngIf="!(smallScreen$ | async)">
+                <p [ngStyle]="{'text-align': 'end'}" class="footer-title">CONTACT</p>
+                <div fxLayoutAlign="space-between end">
+                    <a mat-icon-button target="_blank" href="https://www.linkedin.com/in/benoit-tassin">
+                        <mat-icon svgIcon="linkedin"></mat-icon>
+                    </a>
+                    <a mat-icon-button target="_blank" href="https://github.com/Poseclop">
+                        <mat-icon svgIcon="github"></mat-icon>
+                    </a>
+                    <a mat-icon-button target="_blank" href="https://www.facebook.com/benoit.tassin1/">
+                        <mat-icon svgIcon="facebook"></mat-icon>
+                    </a>
+                    <a mat-icon-button target="_blank" href="https://www.npmjs.com/~poseclop">
+                        <mat-icon svgIcon="npm"></mat-icon>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="ressources" [ngClass]="{'small': smallScreen$ | async }">
+            <a mat-button href="http://www.onlinewebfonts.com">oNline Web Fonts</a>
+            <a mat-button href="https://www.freepik.com/vectors/frame">Frame vector created by milano83 - www.freepik.com</a>
+            <button mat-button>Home picture by Ian Schneider</button>
+        </div>
+    </div>
+</footer>
