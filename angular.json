@@ -324,7 +324,127 @@
           }
         }
       }
+    },
+    "ng-benoit-tassin": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/ng-benoit-tassin",
+      "sourceRoot": "projects/ng-benoit-tassin/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ng-benoit-tassin",
+            "index": "projects/ng-benoit-tassin/src/index.html",
+            "main": "projects/ng-benoit-tassin/src/main.ts",
+            "polyfills": "projects/ng-benoit-tassin/src/polyfills.ts",
+            "tsConfig": "projects/ng-benoit-tassin/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/ng-benoit-tassin/src/favicon.ico",
+              "projects/ng-benoit-tassin/src/assets"
+            ],
+            "styles": [
+              "projects/ng-benoit-tassin/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/ng-benoit-tassin/src/environments/environment.ts",
+                  "with": "projects/ng-benoit-tassin/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ng-benoit-tassin:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ng-benoit-tassin:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ng-benoit-tassin:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-benoit-tassin/src/test.ts",
+            "polyfills": "projects/ng-benoit-tassin/src/polyfills.ts",
+            "tsConfig": "projects/ng-benoit-tassin/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-benoit-tassin/karma.conf.js",
+            "assets": [
+              "projects/ng-benoit-tassin/src/favicon.ico",
+              "projects/ng-benoit-tassin/src/assets"
+            ],
+            "styles": [
+              "projects/ng-benoit-tassin/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-benoit-tassin/tsconfig.app.json",
+              "projects/ng-benoit-tassin/tsconfig.spec.json",
+              "projects/ng-benoit-tassin/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/ng-benoit-tassin/e2e/protractor.conf.js",
+            "devServerTarget": "ng-benoit-tassin:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ng-benoit-tassin:serve:production"
+            }
+          }
+        }
+      }
     }
   },
-  "defaultProject": "ng-play-around"
+  "defaultProject": "ng-benoit-tassin"
 }
