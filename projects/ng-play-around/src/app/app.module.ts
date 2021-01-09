@@ -10,6 +10,8 @@ import { NgOnePagerModule } from 'projects/ng-one-pager/src/public-api';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { NgLoggerServiceModule } from 'projects/ng-logger-service/src/public-api';
+import { environment } from 'projects/ng-benoit-tassin/src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserAnimationsModule,
     NgOnePagerModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    NgLoggerServiceModule.forRoot(environment.production ? 'ERROR' : 'DEBUG')
   ],
   providers: [],
   bootstrap: [AppComponent]

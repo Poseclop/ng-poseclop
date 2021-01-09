@@ -1,6 +1,21 @@
 {
   "name": "@poseclop/ng-logger-service",
   "version": "0.0.1",
+  "description": "Simple logger Service that allows to pick a log level",
+  "keywords": [
+    "angular",
+    "typescript",
+    "service"
+  ],
+  "homepage": "https://github.com/Poseclop/ng-poseclop/tree/main/projects/ng-logger-service",
+  "bugs": {
+    "url": "https://github.com/Poseclop/ng-poseclop/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Benoit TASSIN",
+    "url": "http://www.benoit-tassin.ch"
+  },
   "peerDependencies": {
     "@angular/common": "^11.0.5",
     "@angular/core": "^11.0.5"

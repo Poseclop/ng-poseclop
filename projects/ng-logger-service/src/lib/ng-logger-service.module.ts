@@ -1,12 +1,15 @@
-import { NgModule } from '@angular/core';
-import { NgLoggerServiceComponent } from './ng-logger-service.component';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
+export type LogLevel = 'ERROR' | 'WARN' | 'DEBUG' | 'NO_LOG';
 
-
-@NgModule({
-  declarations: [NgLoggerServiceComponent],
-  imports: [
-  ],
-  exports: [NgLoggerServiceComponent]
-})
-export class NgLoggerServiceModule { }
+@NgModule()
+export class NgLoggerServiceModule {
+  public static forRoot(logLevel?: LogLevel): ModuleWithProviders<NgLoggerServiceModule> {
+    return {
+      ngModule: NgLoggerServiceModule,
+      providers: [
+        { provide: 'logLevel', useValue: logLevel }
+      ]
+    };
+  }
+}

@@ -1,24 +1,21 @@
 # NgLoggerService
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+Simple logger service for angular. Behaves exactly as console.log / warn / error but allows to select a log level.
 
-## Code scaffolding
+## Installation
+1. Install the Package with `npm install @poseclop/ng-logger-service`
+2. Import the module in your application. Include a default logging level
+    ```
+    @ngModule({
+        ...,
+        imports: [
+            ...,
+            NgLoggerServiceModule.forRoot(environment.production ? 'ERROR' : 'DEBUG')
+        ]
+    })
+    ```
 
-Run `ng generate component component-name --project ng-logger-service` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-logger-service`.
-> Note: Don't forget to add `--project ng-logger-service` or else it will be added to the default project in your `angular.json` file. 
-
-## Build
-
-Run `ng build ng-logger-service` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build ng-logger-service`, go to the dist folder `cd dist/ng-logger-service` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test ng-logger-service` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Usage
+Provides log, warn and error functions
+Update the log level via setLogLevel method
+log Levels: `'DEBUG' | 'WARN' | 'ERROR' | 'NO_LOG'`

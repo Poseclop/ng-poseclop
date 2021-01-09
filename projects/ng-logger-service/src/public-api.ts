@@ -3,5 +3,4 @@
  */
 
 export * from './lib/ng-logger-service.service';
-export * from './lib/ng-logger-service.component';
 export * from './lib/ng-logger-service.module';
