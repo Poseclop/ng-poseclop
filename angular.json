@@ -444,6 +444,46 @@
           }
         }
       }
+    },
+    "ng-logger-service": {
+      "projectType": "library",
+      "root": "projects/ng-logger-service",
+      "sourceRoot": "projects/ng-logger-service/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-logger-service/tsconfig.lib.json",
+            "project": "projects/ng-logger-service/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-logger-service/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-logger-service/src/test.ts",
+            "tsConfig": "projects/ng-logger-service/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-logger-service/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-logger-service/tsconfig.lib.json",
+              "projects/ng-logger-service/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-benoit-tassin"

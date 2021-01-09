@@ -168,6 +168,7 @@ export class CognitoService {
             },
             onFailure: error => {
               reject(error);
+              this.Session$.next(null);
             },
             newPasswordRequired: (userAttributes: any, requiredAttributes: any) => {
               resolve('NEW_PASSWORD_REQUIRED');
@@ -203,12 +204,15 @@ export class CognitoService {
                 resolve('SUCCESS');
               }
 
+              this.Session$.next(null);
               resolve('SESSION_INVALID');
 
             });
           }
 
         } catch (error) {
+
+          this.Session$.next(null);
           reject(error);
         }
       })
