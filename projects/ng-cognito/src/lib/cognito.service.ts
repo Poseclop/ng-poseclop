@@ -15,7 +15,7 @@ import {
 } from 'amazon-cognito-identity-js';
 
 export type AuthenticateResponse = 'SUCCESS' | 'NEW_PASSWORD_REQUIRED';
-export type GetCurrentSessionResponse = 'SUCCESS' | 'NO_USER_IN$session' | 'SESSION_INVALID';
+export type GetCurrentSessionResponse = 'SUCCESS' | 'NO_USER_IN_SESSION' | 'SESSION_INVALID';
 
 @Injectable({
   providedIn: 'root'
@@ -191,7 +191,7 @@ export class CognitoService {
         try {
 
           if (!this.currentUser) {
-            resolve('NO_USER_IN$session');
+            resolve('NO_USER_IN_SESSION');
           } else {
 
             this.currentUser.getSession((error: Error, session: CognitoUserSession | null) => {
