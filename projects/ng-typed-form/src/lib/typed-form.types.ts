@@ -5,7 +5,7 @@
 import { ValidatorFn } from '@angular/forms';
 
 // * BASIC DATA TYPES
-export type DataType = null | boolean | number | string | symbol | bigint | object | Array<DataType>;
+export type DataType = null | boolean | number | string | symbol | bigint | Record<string, unknown> | Array<DataType>;
 
 // * BASIC TYPES DEFINED IN @angular/forms + rxjs/Observable
 export type FormGroup = import('@angular/forms').FormGroup;
@@ -22,15 +22,16 @@ export interface IPosControlConfig {
 
 export type PosFormConfig<T> = T extends Array<any>
     ? Array<PosFormConfig<T[0]>>
-    : T extends object
+    : T extends Record<string, unknown>
     ? { [K in keyof Partial<T>]: PosFormConfig<T[K]> }
     : IPosControlConfig;
 
 // * TYPES FOR CONTROLS INSIDE FORMGROUPS AND FORMARRAYS
-export type FormArrayControl<T> = T extends Array<any> ? FormArrayTyped<T[0]> : T extends object ? FormGroupTyped<T> : FormControlTyped<T>;
+export type FormArrayControl<T> = T extends Array<any> ? FormArrayTyped<T[0]>
+    : T extends Record<string, unknown> ? FormGroupTyped<T> : FormControlTyped<T>;
 export type FormGroupControl<T, P extends keyof T> = T[P] extends Array<any>
     ? FormArrayTyped<T[P][0]>
-    : T[P] extends object
+    : T[P] extends Record<string, unknown>
     ? FormGroupTyped<T[P]>
     : FormControlTyped<T[P]>;
 

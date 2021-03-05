@@ -64,7 +64,7 @@
                                     </span>
                                     {{experience.title}}
                                 </h3>
-                                <h4 *ngIf="!(smallScreen$ | async)">{{experience.subTitle}}</h4>
+                                <h4 *ngIf="(smallScreen$ | async) === false">{{experience.subTitle}}</h4>
                             </div>
                         </ng-template>
                         <h4 class="mobile-subtitle" *ngIf="smallScreen$ | async">{{experience.subTitle}}</h4>

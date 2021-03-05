@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-export type LogLevel = 'ERROR' | 'WARN' | 'DEBUG' | 'NO_LOG';
+export type LogLevel = 'error' | 'warn' | 'debug' | 'no-log';
 
 @NgModule()
 export class NgLoggerServiceModule {

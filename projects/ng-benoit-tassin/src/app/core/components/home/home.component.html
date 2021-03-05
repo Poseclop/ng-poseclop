@@ -47,7 +47,7 @@
                     PWA<mat-icon svgIcon="pwa" aria-hidden="false" aria-label="pwa icon"></mat-icon>
                 </button>
             </section>
-            <section class="tool-detail" *ngIf="!(smallScreen$ | async)">
+            <section class="tool-detail" *ngIf="(smallScreen$ | async) === false">
                 <div class="container" [@switchPicture]="currentCard.value">
                     <div class="image-container">
                         <img src="assets/img/{{shownCard.picture}}" alt="detail image">

@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ng-benoit-tassin';
+  private title = 'ng-benoit-tassin';
+
+  constructor() {
+    let title: string;
+  }
 }

@@ -9,7 +9,7 @@
                     <a mat-button [routerLink]="['/', 'projects']">PROJETS</a>
                 </div>
             </div>
-            <div *ngIf="!(smallScreen$ | async)">
+            <div *ngIf="!smallScreen$ | async === false">
                 <p [ngStyle]="{'text-align': 'end'}" class="footer-title">CONTACT</p>
                 <div fxLayoutAlign="space-between end">
                     <a mat-icon-button target="_blank" href="https://www.linkedin.com/in/benoit-tassin">

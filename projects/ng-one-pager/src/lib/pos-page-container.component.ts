@@ -13,8 +13,8 @@ import {
 import { OnePagerComponent } from './pos-page.component';
 
 export type TPageEvent = {
-  previousIndex: number,
-  currentIndex: number
+  previousIndex: number;
+  currentIndex: number;
 };
 
 @Component({
@@ -23,7 +23,10 @@ export type TPageEvent = {
     <ng-content></ng-content>
     <div class="pos-page-scroller-controls">
         <button class="pos-page-scroller-arrow-button" (click)="previous()" [ngStyle]="{'color': colorIdle}">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+            </svg>
         </button>
         <button
           *ngFor="let page of pageQueryList; let i = index"
@@ -33,7 +36,10 @@ export type TPageEvent = {
           (click)="scrollToPage(i)">
         </button>
         <button class="pos-page-scroller-arrow-button" (click)="next()" [ngStyle]="{'color': colorIdle}">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+              <path d="M0 0h24v24H0V0z" fill="none"/>
+              <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            </svg>
         </button>
     </div>
   `,
@@ -188,6 +194,7 @@ export class OnePagerContainerComponent implements AfterViewInit {
 
   /**
    * Scroll to a specific page (by default, to current page Index)
+   *
    * @param index The index of the page to scroll to
    */
   scrollToPage(index?: number): void {

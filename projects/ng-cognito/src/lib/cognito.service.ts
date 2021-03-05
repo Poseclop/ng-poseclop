@@ -23,15 +23,15 @@ export type GetCurrentSessionResponse = 'SUCCESS' | 'NO_USER_IN_SESSION' | 'SESS
 export class CognitoService {
 
   /** Cognito User Session */
-  private Session: CognitoUserSession | null = null;
+  private pSession: CognitoUserSession | null = null;
   get session(): CognitoUserSession | null {
-    return this.Session || null;
+    return this.pSession || null;
   }
 
   /** Cognito User Session observable */
-  private Session$ = new BehaviorSubject<CognitoUserSession | null>(null);
+  private pSession$ = new BehaviorSubject<CognitoUserSession | null>(null);
   get session$(): Observable<CognitoUserSession | null> {
-    return this.Session$.asObservable();
+    return this.pSession$.asObservable();
   }
 
   /** Cognito JWT Token */
@@ -67,11 +67,11 @@ export class CognitoService {
 
   /**
    * Try to register a User to the Cognito User Pool
+   *
    * @param userDetails The user name and password
    * @param attributes The Use attributes (some might be required)
    */
-  public registerUser(userDetails: IAuthenticationDetailsData, attributes: ICognitoUserAttributeData[])
-    : Observable<ISignUpResult> {
+  public registerUser(userDetails: IAuthenticationDetailsData, attributes: ICognitoUserAttributeData[]): Observable<ISignUpResult> {
     return from(
       new Promise<ISignUpResult>((resolve, reject) => {
         try {
@@ -99,6 +99,7 @@ export class CognitoService {
 
   /**
    * Confirms a registered user using code received by email or SMS
+   *
    * @param userName user name
    * @param confirmationCode confirmation code received via email
    */
@@ -106,6 +107,7 @@ export class CognitoService {
     return from(
       new Promise<void>((resolve, reject) => {
         try {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           const user = new CognitoUser({ Username: userName, Pool: this.userPool });
           user.confirmRegistration(confirmationCode, false, (err, result) => {
             if (err) {
@@ -123,12 +125,14 @@ export class CognitoService {
 
   /**
    * Resend confirmation code for selected user
+   *
    * @param userName user name
    */
   public resendConfirmationCode(userName: string): Observable<void> {
     return from(
       new Promise<void>((resolve, reject) => {
         try {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           const user = new CognitoUser({ Username: userName, Pool: this.userPool });
           user.resendConfirmationCode((err, result) => {
             if (err) {
@@ -146,6 +150,7 @@ export class CognitoService {
 
   /**
    * Login the user with provided authentication details
+   *
    * @param userName user name
    * @param password user password
    */
@@ -156,19 +161,21 @@ export class CognitoService {
 
         try {
 
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           const authenticationDetails: AuthenticationDetails = new AuthenticationDetails({ Username: userName, Password: password });
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           const cognitoUser: CognitoUser = new CognitoUser({ Username: userName, Pool: this.userPool });
 
           cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: cognitoUserSession => {
-              this.Session = cognitoUserSession;
-              this.Session$.next(cognitoUserSession);
+              this.pSession = cognitoUserSession;
+              this.pSession$.next(cognitoUserSession);
               // TODO Manage new credentials https://www.npmjs.com/package/amazon-cognito-identity-js
               resolve('SUCCESS');
             },
             onFailure: error => {
               reject(error);
-              this.Session$.next(null);
+              this.pSession$.next(null);
             },
             newPasswordRequired: (userAttributes: any, requiredAttributes: any) => {
               resolve('NEW_PASSWORD_REQUIRED');
@@ -199,12 +206,12 @@ export class CognitoService {
               if (error) {
                 reject(error);
               } else if (session && session.isValid()) {
-                this.Session = session;
-                this.Session$.next(session);
+                this.pSession = session;
+                this.pSession$.next(session);
                 resolve('SUCCESS');
               }
 
-              this.Session$.next(null);
+              this.pSession$.next(null);
               resolve('SESSION_INVALID');
 
             });
@@ -212,7 +219,7 @@ export class CognitoService {
 
         } catch (error) {
 
-          this.Session$.next(null);
+          this.pSession$.next(null);
           reject(error);
         }
       })
@@ -228,6 +235,7 @@ export class CognitoService {
 
         try {
 
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           const cognitoUserData: ICognitoUserData = { Pool: this.userPool, Username: authenticationDetailsData.Username };
           const cognitoUser: CognitoUser = new CognitoUser(cognitoUserData);
 
@@ -236,8 +244,8 @@ export class CognitoService {
           } else {
             cognitoUser.completeNewPasswordChallenge(authenticationDetailsData.Password, null, {
               onSuccess: userSession => {
-                this.Session = userSession;
-                this.Session$.next(userSession);
+                this.pSession = userSession;
+                this.pSession$.next(userSession);
                 resolve();
               },
               onFailure: error => {
@@ -265,8 +273,8 @@ export class CognitoService {
 
           if (cognitoUser) {
             cognitoUser.signOut();
-            this.Session = null;
-            this.Session$.next(null);
+            this.pSession = null;
+            this.pSession$.next(null);
             resolve();
           } else {
             reject('No user signed in');

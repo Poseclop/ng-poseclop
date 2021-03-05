@@ -1,5 +1,5 @@
-export enum coreRoutes {
-    'HOME' = 'home',
-    'ABOUT_ME' = 'about-me',
-    'PROJECTS' = 'projects',
+export enum CoreRoutes {
+    'home' = 'home',
+    'about-me' = 'about-me',
+    'projects' = 'projects',
 }

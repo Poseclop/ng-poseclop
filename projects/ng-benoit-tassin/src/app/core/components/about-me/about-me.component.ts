@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { take } from 'rxjs/operators';
 
-type TExperience = { dateFrom: Date, dateTo?: Date, title: string, subTitle: string, content: Array<string>, image: string };
+type TExperience = { dateFrom: Date; dateTo?: Date; title: string; subTitle: string; content: Array<string>; image: string };
 
 @Component({
   templateUrl: './about-me.component.html',
@@ -47,6 +47,7 @@ export class AboutMeComponent implements OnInit {
       dateTo: new Date('11/01/2018'),
       title: 'Business Planner, Gillette CEEMEA',
       subTitle: 'Procter & Gamble, Genève',
+      // eslint-disable-next-line max-len
       content: ['Responsable de la logistique pour Gillette sur les régions MEA + India. Mise en place et supervision des chaînes logistiques, qualification des nouveaux produits',
         'Responsable des prévisions de vente et analyste pour l\'équipe logistique Gillette EMEA.'
       ],
@@ -65,6 +66,7 @@ export class AboutMeComponent implements OnInit {
       dateTo: new Date('09/01/2014'),
       title: 'Supply Planning Analyst CEEMEA Headquarter',
       subTitle: 'Procter & Gamble, Genève',
+      // eslint-disable-next-line max-len
       content: ['Analyste des opérations de logistique pour la région CEEMEA. Responsable de la préparations de rapports utilisés par les directeurs regionaux des différentes divisions.'],
       image: 'business-analyst'
     },
@@ -73,6 +75,7 @@ export class AboutMeComponent implements OnInit {
       dateTo: new Date('01/01/2013'),
       title: 'Global Artwork Planner, Gillette',
       subTitle: 'Procter & Gamble, Genève',
+      // eslint-disable-next-line max-len
       content: ['Coordination du processus de création des packaging pour l\'Europe, le Moyen-Orient et l\'Afrique. Embauché après 6 mois d\'intérim par une équipe basé a Boston.'],
       image: 'artwork-planner'
     },
@@ -88,6 +91,7 @@ export class AboutMeComponent implements OnInit {
       dateTo: new Date('01/01/2009'),
       title: 'Planificateur des évènement',
       subTitle: 'Hotel Radisson Tahiti, Polynésie française',
+      // eslint-disable-next-line max-len
       content: ['Stage de 6 mois. Responsable de la promotion de la planification et du service pour les évènements. Représentation du département "évènements" au commité exécutif',
         'En plus des évènement réguliers, organisation de plus de 30 mariages, d\'un rassemblement politique et d\'un défilé de mode.'
       ],
@@ -136,28 +140,26 @@ export class AboutMeComponent implements OnInit {
     );
   }
 
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event): void {
+    if (this.blockscroll) {
+      scrollTo(window.scrollX, 662);
+    }
+  }
+
+
   ngOnInit(): void {
     this.smallScreen$.pipe(
       take(1)
     ).subscribe(smallScreen => {
       this.experiences.forEach(experience => {
-        const _img = new Image();
-        _img.src = `/assets/img/${experience.image}${smallScreen ? '_large' : ''}.png`;
+        const img = new Image();
+        img.src = `/assets/img/${experience.image}${smallScreen ? '_large' : ''}.png`;
       });
     });
-    // const chronologyData: IDateObject[] = this.experiences.map(el => ({
-    //   date: el.dateFrom,
-    //   label: el.title
-    // }));
-    // this.chronology = new Chronology(650, 900, { top: 20, left: 20, right: 20, bottom: 20 }, chronologyData);
   }
 
-  private registerIcons(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer): void {
-    iconRegistry.addSvgIcon('facebook', sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/facebook.svg'));
-    iconRegistry.addSvgIcon('linkedin', sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/linkedin.svg'));
-    iconRegistry.addSvgIcon('github', sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/github.svg'));
-    iconRegistry.addSvgIcon('npm', sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/npm.svg'));
-  }
 
   onSelectionChange(event: StepperSelectionEvent): void {
     setTimeout(() => {
@@ -172,14 +174,14 @@ export class AboutMeComponent implements OnInit {
 
   onStepAnimationDone(title: HTMLHeadingElement): void {
     this.blockscroll = false;
-    // title.scrollIntoView();
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: Event): void {
-    if (this.blockscroll) {
-      scrollTo(window.scrollX, 662);
-    }
+
+  private registerIcons(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer): void {
+    iconRegistry.addSvgIcon('facebook', sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/facebook.svg'));
+    iconRegistry.addSvgIcon('linkedin', sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/linkedin.svg'));
+    iconRegistry.addSvgIcon('github', sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/github.svg'));
+    iconRegistry.addSvgIcon('npm', sanitizer.bypassSecurityTrustResourceUrl('/assets/svg/npm.svg'));
   }
 
 }

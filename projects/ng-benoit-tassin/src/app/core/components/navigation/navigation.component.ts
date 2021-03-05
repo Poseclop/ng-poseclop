@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { ResponsiveUiService } from 'dist/ng-responsive-ui/public-api';
+import { ResponsiveUiService } from 'ng-responsive-ui';
 import { map } from 'rxjs/operators';
-import { coreRoutes } from '../../core.routes';
+import { CoreRoutes } from '../../core.routes';
 
 @Component({
   selector: 'core-navigation',
@@ -10,7 +10,7 @@ import { coreRoutes } from '../../core.routes';
 })
 export class NavigationComponent {
 
-  coreRoutes = coreRoutes;
+  coreRoutes = CoreRoutes;
   desktopLayout$ = this.responsiveUiService.screenLayout$.pipe(
     map(layout => layout === 'WebLandscape' || layout === 'WebPortrait')
   );

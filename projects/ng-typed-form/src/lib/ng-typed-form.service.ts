@@ -13,10 +13,13 @@ export class NgTypedFormService {
 
   /**
    * Generate a new TypedFormControl with provided default value
+   *
    * @param defaultValue The default value of the formControl
    */
-  generateTypedFormControl<T extends boolean | number | string | symbol | bigint>(defaultValue: T, config?: IPosControlConfig, key?: string)
-    : FormControlTyped<T> {
+  generateTypedFormControl<T extends boolean | number | string | symbol | bigint>(
+    defaultValue: T,
+    config?: IPosControlConfig,
+    key?: string): FormControlTyped<T> {
 
     if (config) {
       const options: AbstractControlOptions = {
@@ -33,10 +36,11 @@ export class NgTypedFormService {
 
   /**
    * Generate a new TypedFormArray with provided default value
+   *
    * @param defaultValue The default value of the FormArray
    */
-  generateTypedFormArray<T extends DataType>(defaultValue: Array<T>, config?: PosFormConfig<T> | IPosControlConfig, key?: string)
-    : FormArrayTyped<T> {
+  generateTypedFormArray<T extends DataType>(defaultValue: Array<T>, config?: PosFormConfig<T> | IPosControlConfig, key?: string):
+    FormArrayTyped<T> {
 
     // ! Hack to avoid error on Object.keys
     let catchValue: Array<any> = defaultValue;
@@ -59,7 +63,7 @@ export class NgTypedFormService {
           } else if (value instanceof Array) {
             return this.generateTypedFormArray(value, config);
           } else if (value instanceof Object) {
-            return this.generateTypedFormGroup(value as object, config as PosFormConfig<T>);
+            return this.generateTypedFormGroup(value, config as PosFormConfig<T>);
           } else {
             throw new Error(`object ${value} no supported`);
           }
@@ -72,9 +76,10 @@ export class NgTypedFormService {
 
   /**
    * Generate a new TypedFormGroup with provided default value
+   *
    * @param defaultValue The default value of the FormGroup
    */
-  generateTypedFormGroup<T extends {}>(defaultValue: T, config?: PosFormConfig<T>): FormGroupTyped<T> {
+  generateTypedFormGroup<T extends Record<string, unknown>>(defaultValue: T, config?: PosFormConfig<T>): FormGroupTyped<T> {
 
     const group: Partial<{ [K in keyof T]: AbstractControl }> = {};
 

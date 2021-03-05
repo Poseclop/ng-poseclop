@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export type ScreenLayout = 'HandsetLandscape' | 'HandsetPortrait' | 'TabletLandscape' | 'TabletPortrait' | 'WebLandscape' | 'WebPortrait';
 
@@ -9,22 +9,29 @@ export type ScreenLayout = 'HandsetLandscape' | 'HandsetPortrait' | 'TabletLands
 })
 export class ResponsiveUiService {
 
-  private gutter = new BehaviorSubject<number>(24);
-  /** Responsive gutter / margin size */
-  gutter$ = this.gutter.asObservable();
-
   private columns = new BehaviorSubject<number>(12);
-  /** Responsive number of columns */
-  columns$ = this.columns.asObservable();
-
   private screenLayout = new BehaviorSubject<ScreenLayout>('WebLandscape');
+  private gutter = new BehaviorSubject<number>(24);
+
+  /** Responsive gutter / margin size */
+  get gutter$(): Observable<number> {
+    return this.gutter.asObservable();
+  }
+
+  /** Responsive number of columns */
+  get columns$(): Observable<number> {
+    return this.columns.asObservable();
+  }
+
   /** Screen Layout Observable */
-  screenLayout$ = this.screenLayout.asObservable();
+  get screenLayout$(): Observable<ScreenLayout> {
+    return this.screenLayout.asObservable();
+  }
 
   constructor(
-    public _observer: BreakpointObserver
+    observer: BreakpointObserver
   ) {
-    this._observer.observe([
+    observer.observe([
       Breakpoints.HandsetLandscape,
       Breakpoints.HandsetPortrait,
       Breakpoints.TabletLandscape,

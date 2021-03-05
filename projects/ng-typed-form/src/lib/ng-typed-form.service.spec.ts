@@ -11,7 +11,7 @@ const mockFormGroupObject = {
   hero: true,
   address: {
     street: 'bank street',
-    number: 7,
+    streetNumber: 7,
     city: true,
     homes: [{ name: 'home1', street: 'street1' }, { name: 'home2', street: 'street2' }]
   },

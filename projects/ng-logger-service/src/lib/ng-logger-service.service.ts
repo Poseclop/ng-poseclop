@@ -2,10 +2,10 @@ import { Inject, Injectable } from '@angular/core';
 import { LogLevel } from './ng-logger-service.module';
 
 enum ELogLevel {
-  'NO_LOG' = 0,
-  'ERROR' = 1,
-  'WARN' = 2,
-  'DEBUG' = 3,
+  'no-log' = 0,
+  'error' = 1,
+  'warn' = 2,
+  'debug' = 3,
 }
 
 @Injectable({
@@ -16,7 +16,7 @@ export class NgLoggerService {
   public get log(): (...args: any[]) => any {
     const log = console.log.bind(window.console);
 
-    return ELogLevel[this.logLevel] >= ELogLevel.DEBUG ? log : () => { };
+    return ELogLevel[this.logLevel] >= ELogLevel.debug ? log : () => { };
   }
 
   public get warn(): (...args: any[]) => any {
@@ -24,13 +24,13 @@ export class NgLoggerService {
 
     // Implemnt server-side logging
 
-    return ELogLevel[this.logLevel] >= ELogLevel.WARN ? warn : () => { };
+    return ELogLevel[this.logLevel] >= ELogLevel.warn ? warn : () => { };
   }
 
   public get error(): (...args: any[]) => any {
     const error = console.error.bind(window.console);
 
-    return ELogLevel[this.logLevel] >= ELogLevel.ERROR ? error : () => { };
+    return ELogLevel[this.logLevel] >= ELogLevel.error ? error : () => { };
   }
 
   constructor(

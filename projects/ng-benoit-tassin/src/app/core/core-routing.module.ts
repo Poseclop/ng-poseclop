@@ -3,13 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { AboutMeComponent } from './components/about-me/about-me.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProjectsComponent } from './components/projects/projects.component';
-import { coreRoutes } from './core.routes';
+import { CoreRoutes } from './core.routes';
 
 const routes: Routes = [
-  { path: coreRoutes.HOME, component: HomeComponent },
-  { path: coreRoutes.ABOUT_ME, component: AboutMeComponent },
-  { path: coreRoutes.PROJECTS, component: ProjectsComponent },
-  { path: '', pathMatch: 'full', redirectTo: coreRoutes.HOME }
+  { path: CoreRoutes.home, component: HomeComponent },
+  { path: CoreRoutes['about-me'], component: AboutMeComponent },
+  { path: CoreRoutes.projects, component: ProjectsComponent },
+  { path: '', pathMatch: 'full', redirectTo: CoreRoutes.home }
 ];
 
 @NgModule({
