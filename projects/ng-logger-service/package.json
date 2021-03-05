@@ -1,6 +1,6 @@
 {
   "name": "@poseclop/ng-logger-service",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple logger Service that allows to pick a log level",
   "keywords": [
     "angular",
