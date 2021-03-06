@@ -16,7 +16,7 @@ export class CognitoInterceptor implements HttpInterceptor {
 
   constructor(private cognito: CognitoService) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
     return of(this.cognito.token).pipe(
       take(1),

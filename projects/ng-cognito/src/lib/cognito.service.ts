@@ -41,7 +41,7 @@ export class CognitoService {
 
   /** Cognito User ID */
   get userId(): string | null {
-    return this.session ? this.session.getIdToken().payload.sub : null;
+    return this.session ? this.session.getIdToken().payload.sub as string : null;
   }
 
   /** Valid Cognito Session */
@@ -109,7 +109,7 @@ export class CognitoService {
         try {
           // eslint-disable-next-line @typescript-eslint/naming-convention
           const user = new CognitoUser({ Username: userName, Pool: this.userPool });
-          user.confirmRegistration(confirmationCode, false, (err, result) => {
+          user.confirmRegistration(confirmationCode, false, (err, _) => {
             if (err) {
               reject(err);
             }
@@ -134,7 +134,7 @@ export class CognitoService {
         try {
           // eslint-disable-next-line @typescript-eslint/naming-convention
           const user = new CognitoUser({ Username: userName, Pool: this.userPool });
-          user.resendConfirmationCode((err, result) => {
+          user.resendConfirmationCode((err, _) => {
             if (err) {
               reject(err);
             }
@@ -177,7 +177,7 @@ export class CognitoService {
               reject(error);
               this.pSession$.next(null);
             },
-            newPasswordRequired: (userAttributes: any, requiredAttributes: any) => {
+            newPasswordRequired: (_: unknown, __: unknown) => {
               resolve('NEW_PASSWORD_REQUIRED');
             }
           });
