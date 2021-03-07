@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, AbstractControlOptions, FormBuilder } from '@angular/forms';
-import { DataType, FormArrayTyped, FormControlTyped, FormGroupTyped, IPosControlConfig, PosFormConfig } from './typed-form.types';
+import { AbstractControl, FormBuilder } from '@angular/forms';
+import { DataType, FormArrayTyped, FormControlTyped, FormGroupDefaultValues, FormGroupTyped, IPosControlConfig, PosFormConfig } from './typed-form.types';
 
 @Injectable({
   providedIn: 'root'
@@ -16,20 +16,13 @@ export class NgTypedFormService {
    *
    * @param defaultValue The default value of the formControl
    */
-  generateTypedFormControl<T extends boolean | number | string | symbol | bigint>(
-    defaultValue: T,
-    config?: IPosControlConfig,
-    key?: string): FormControlTyped<T> {
+  generateTypedFormControl<T extends boolean | number | string | symbol | bigint>(defaultValue: T, config?: IPosControlConfig): FormControlTyped<T> {
 
     if (config) {
-      const options: AbstractControlOptions = {
-        validators: config?.validators
-      };
-
       return this.$fb.control({
         value: config.nullDefault ? null : defaultValue,
         disabled: config.disabled ? true : false
-      }, options);
+      }, config.options ? config.options : null);
     }
     return this.$fb.control(defaultValue);
   }
@@ -39,11 +32,10 @@ export class NgTypedFormService {
    *
    * @param defaultValue The default value of the FormArray
    */
-  generateTypedFormArray<T extends DataType>(defaultValue: Array<T>, config?: PosFormConfig<T> | IPosControlConfig, key?: string):
-    FormArrayTyped<T> {
+  generateTypedFormArray<T extends DataType>(defaultValue: Array<T>, config?: PosFormConfig<T> | IPosControlConfig): FormArrayTyped<T> {
 
     // ! Hack to avoid error on Object.keys
-    let catchValue: Array<any> = defaultValue;
+    let catchValue: Array<T> = defaultValue;
 
     if (defaultValue === null) {
       catchValue = [];
@@ -59,13 +51,13 @@ export class NgTypedFormService {
           return this.generateTypedFormControl(value, config as IPosControlConfig);
         case 'object':
           if (value === null) {
-            return this.generateTypedFormControl(value, config as IPosControlConfig);
+            throw new Error('Cannot take null as default value. Use PosFormConfig instead')
           } else if (value instanceof Array) {
             return this.generateTypedFormArray(value, config);
           } else if (value instanceof Object) {
-            return this.generateTypedFormGroup(value, config as PosFormConfig<T>);
+            return this.generateTypedFormGroup(value as FormGroupDefaultValues, config as PosFormConfig<FormGroupDefaultValues>);
           } else {
-            throw new Error(`object ${value} no supported`);
+            throw new Error(`object ${String(value)} no supported`);
           }
         default:
           throw new Error(`Type ${typeof value} not supported`);
@@ -79,37 +71,30 @@ export class NgTypedFormService {
    *
    * @param defaultValue The default value of the FormGroup
    */
-  generateTypedFormGroup<T extends Record<string, unknown>>(defaultValue: T, config?: PosFormConfig<T>): FormGroupTyped<T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  generateTypedFormGroup<T extends Record<string, any>>(defaultValue: T, config?: PosFormConfig<T>): FormGroupTyped<T> {
 
-    const group: Partial<{ [K in keyof T]: AbstractControl }> = {};
+    const group: Partial<{ [K: string]: AbstractControl }> = {};
 
     Object.keys(defaultValue).forEach(k => {
 
-      // @ts-ignore
-      const abstractConfig = config && config[k];
+      const abstractConfig = config ? config[k] : undefined;
 
-      // @ts-ignore
       switch (typeof defaultValue[k]) {
         case 'boolean':
         case 'number':
         case 'string':
         case 'symbol':
         case 'bigint':
-          // @ts-ignore
-          group[k] = this.generateTypedFormControl(defaultValue[k], abstractConfig, k);
+          group[k] = this.generateTypedFormControl(defaultValue[k] as boolean | number | string | symbol | bigint, abstractConfig as IPosControlConfig);
           break;
         case 'object':
-          // @ts-ignore
           if (defaultValue[k] === null) {
-            // @ts-ignore
-            group[k] = this.generateTypedFormControl(defaultValue[k], abstractConfig, k);
-            // @ts-ignore
+            throw new Error('Cannot take null as default value. Use PosFormConfig instead')
           } else if (defaultValue[k] instanceof Array) {
-            // @ts-ignore
-            group[k] = this.generateTypedFormArray(defaultValue[k], abstractConfig, k);
+            group[k] = this.generateTypedFormArray(defaultValue[k] as DataType[], abstractConfig as IPosControlConfig);
           } else {
-            // @ts-ignore
-            group[k] = this.generateTypedFormGroup(defaultValue[k], abstractConfig, k);
+            group[k] = this.generateTypedFormGroup(defaultValue[k] as FormGroupDefaultValues, abstractConfig as PosFormConfig<{ [K: string]: DataType}>);
           }
       }
     });

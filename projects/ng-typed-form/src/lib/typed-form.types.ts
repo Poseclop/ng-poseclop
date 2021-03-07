@@ -2,10 +2,9 @@
  * INSPIRED FROM https://gist.github.com/dmorosinotto/76a9272b5c45af1f78a61e7894df5777#file-typedforms-d-ts
  */
 
-import { ValidatorFn } from '@angular/forms';
-
 // * BASIC DATA TYPES
-export type DataType = null | boolean | number | string | symbol | bigint | Record<string, unknown> | Array<DataType>;
+export type DataType = null | boolean | number | string | symbol | bigint | FormGroupDefaultValues | Array<DataType>;
+export type FormGroupDefaultValues = { [K: string]: DataType }
 
 // * BASIC TYPES DEFINED IN @angular/forms + rxjs/Observable
 export type FormGroup = import('@angular/forms').FormGroup;
@@ -13,28 +12,35 @@ export type FormArray = import('@angular/forms').FormArray;
 export type FormControl = import('@angular/forms').FormControl;
 export type AbstractControl = import('@angular/forms').AbstractControl;
 export type Observable<T> = import('rxjs').Observable<T>;
+export type AbstractControlOptions = import('@angular/forms').AbstractControlOptions
 
 export interface IPosControlConfig {
     nullDefault?: boolean;
     disabled?: boolean;
-    validators?: ValidatorFn | ValidatorFn[] | null | undefined;
+    options?: AbstractControlOptions
 }
 
-export type PosFormConfig<T> = T extends Array<any>
+export type PosFormConfig<T> = T extends Array<DataType>
     ? Array<PosFormConfig<T[0]>>
-    : T extends Record<string, unknown>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    : T extends { [K: string]: any }
     ? { [K in keyof Partial<T>]: PosFormConfig<T[K]> }
     : IPosControlConfig;
 
 // * TYPES FOR CONTROLS INSIDE FORMGROUPS AND FORMARRAYS
-export type FormArrayControl<T> = T extends Array<any> ? FormArrayTyped<T[0]>
-    : T extends Record<string, unknown> ? FormGroupTyped<T> : FormControlTyped<T>;
-export type FormGroupControl<T, P extends keyof T> = T[P] extends Array<any>
+export type FormArrayControl<T> = T extends Array<DataType>
+    ? FormArrayTyped<T[0]>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    : T extends Record<string, any>
+    ? FormGroupTyped<T>
+    : FormControlTyped<T>;
+
+export type FormGroupControl<T, P extends keyof T> = T[P] extends Array<DataType>
     ? FormArrayTyped<T[P][0]>
-    : T[P] extends Record<string, unknown>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    : T[P] extends Record<string, any>
     ? FormGroupTyped<T[P]>
     : FormControlTyped<T[P]>;
-
 
 // ! I don't know why Angular Team doesn't define it https://github.com/angular/angular/blob/7.2.7/packages/forms/src/model.ts#L15-L45)
 export type STATUS = 'VALID' | 'INVALID' | 'PENDING' | 'DISABLED';
