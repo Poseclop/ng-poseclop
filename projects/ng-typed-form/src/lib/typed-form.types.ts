@@ -3,8 +3,9 @@
  */
 
 // * BASIC DATA TYPES
-export type DataType = null | boolean | number | string | symbol | bigint | FormGroupDefaultValues | Array<DataType>;
-export type FormGroupDefaultValues = { [K: string]: DataType }
+export type DataType = ControlDataType | FormGroupDataType | Array<DataType>
+export type ControlDataType = boolean | number | string | symbol | bigint;
+export type FormGroupDataType = { [K: string]: DataType }
 
 // * BASIC TYPES DEFINED IN @angular/forms + rxjs/Observable
 export type FormGroup = import('@angular/forms').FormGroup;
@@ -13,19 +14,6 @@ export type FormControl = import('@angular/forms').FormControl;
 export type AbstractControl = import('@angular/forms').AbstractControl;
 export type Observable<T> = import('rxjs').Observable<T>;
 export type AbstractControlOptions = import('@angular/forms').AbstractControlOptions
-
-export interface IPosControlConfig {
-    nullDefault?: boolean;
-    disabled?: boolean;
-    options?: AbstractControlOptions
-}
-
-export type PosFormConfig<T> = T extends Array<DataType>
-    ? Array<PosFormConfig<T[0]>>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    : T extends { [K: string]: any }
-    ? { [K in keyof Partial<T>]: PosFormConfig<T[K]> }
-    : IPosControlConfig;
 
 // * TYPES FOR CONTROLS INSIDE FORMGROUPS AND FORMARRAYS
 export type FormArrayControl<T> = T extends Array<DataType>
@@ -80,13 +68,13 @@ export interface FormGroupTyped<T> extends FormGroup {
     readonly status: STATUSs;
     statusChanges: Observable<STATUS>;
     registerControl<P extends keyof T>(name: P, control: FormGroupControl<T, P>): void;
-    registerControl<V = any>(name: string, control: AbstractControlTyped<V>): AbstractControlTyped<V>;
+    registerControl<V = unknown>(name: string, control: AbstractControlTyped<V>): AbstractControlTyped<V>;
     addControl<P extends keyof T>(name: P, control: FormGroupControl<T, P>): void;
-    addControl<V = any>(name: string, control: AbstractControlTyped<V>): void;
+    addControl<V = unknown>(name: string, control: AbstractControlTyped<V>): void;
     removeControl(name: keyof T): void;
     removeControl(name: string): void;
     setControl<P extends keyof T>(name: P, control: FormGroupControl<T, P>): void;
-    setControl<V = any>(name: string, control: AbstractControlTyped<V>): void;
+    setControl<V = unknown>(name: string, control: AbstractControlTyped<V>): void;
     contains(name: keyof T): boolean;
     contains(name: string): boolean;
     get<P extends keyof T>(path: P): FormGroupControl<T, P>;
