@@ -20,6 +20,10 @@
       "dom"
     ],
     "paths": {
+      "ng-animations": [
+        "dist/ng-animations/ng-animations",
+        "dist/ng-animations"
+      ],
       "ng-cognito": [
         "dist/ng-cognito/ng-cognito",
         "dist/ng-cognito"
@@ -43,6 +47,10 @@
       "ng-logger-service": [
         "dist/ng-logger-service/ng-logger-service",
         "dist/ng-logger-service"
+      ],
+      "ng-videojs": [
+        "dist/ng-videojs/ng-videojs",
+        "dist/ng-videojs"
       ]
     }
   },

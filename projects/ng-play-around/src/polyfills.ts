@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
@@ -51,6 +53,7 @@
  *  (window as any).__Zone_enable_cross_context_check = true;
  *
  */
+(window as any).global = window;
 
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.

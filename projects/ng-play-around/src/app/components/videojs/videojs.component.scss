@@ -1,0 +1,10 @@
+:host {
+  max-width: 100vw;
+}
+
+.video-container {
+  width: 100%;
+  padding-top: calc(100% * 9 / 16);
+  height: 0;
+  position: relative;
+}

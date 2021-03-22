@@ -16,37 +16,36 @@ import {
 
 export type AuthenticateResponse = 'SUCCESS' | 'NEW_PASSWORD_REQUIRED';
 export type GetCurrentSessionResponse = 'SUCCESS' | 'NO_USER_IN_SESSION' | 'SESSION_INVALID';
+export interface ICognitoSignupParams {
+  username: string;
+  password: string;
+  attributes: ICognitoUserAttributeData[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CognitoService {
 
-  /** Cognito User Session */
-  private pSession: CognitoUserSession | null = null;
-  get session(): CognitoUserSession | null {
-    return this.pSession || null;
-  }
-
   /** Cognito User Session observable */
-  private pSession$ = new BehaviorSubject<CognitoUserSession | null>(null);
+  private session = new BehaviorSubject<CognitoUserSession | null>(null);
   get session$(): Observable<CognitoUserSession | null> {
-    return this.pSession$.asObservable();
+    return this.session.asObservable();
   }
 
   /** Cognito JWT Token */
   get token(): string | null {
-    return this.session ? this.session.getIdToken().getJwtToken() : null;
+    return this.session.value ? this.session.value.getIdToken().getJwtToken() : null;
   }
 
   /** Cognito User ID */
   get userId(): string | null {
-    return this.session ? this.session.getIdToken().payload.sub as string : null;
+    return this.session.value ? this.session.value.getIdToken().payload.sub as string : null;
   }
 
   /** Valid Cognito Session */
   get logged(): boolean {
-    return this.session ? this.session.isValid() : false;
+    return this.session.value ? this.session.value.isValid() : false;
   }
   /** Valid Cognito Session as observable */
   get logged$(): Observable<boolean> {
@@ -60,49 +59,35 @@ export class CognitoService {
 
   constructor(@Inject('userPool') private userPool: CognitoUserPool) { }
 
-  /** Generate a CognitoUserAttribute */
-  public generateCognitoAttribute(data: ICognitoUserAttributeData): CognitoUserAttribute {
-    return new CognitoUserAttribute(data);
-  }
+  /** Try to register a User to the Cognito User Pool */
+  public signUp(userName: string, password: string, attributes?: ICognitoUserAttributeData[]): Observable<ISignUpResult> {
 
-  /**
-   * Try to register a User to the Cognito User Pool
-   *
-   * @param userDetails The user name and password
-   * @param attributes The Use attributes (some might be required)
-   */
-  public registerUser(userDetails: IAuthenticationDetailsData, attributes: ICognitoUserAttributeData[]): Observable<ISignUpResult> {
-    return from(
-      new Promise<ISignUpResult>((resolve, reject) => {
-        try {
-          if (!userDetails.Password) {
-            throw new Error('No Password provided');
-          }
+    return new Observable(observer => {
+      let cognitoAttributes: CognitoUserAttribute[] = [];
 
-          const cognitoAttributes = attributes.map(attr => this.generateCognitoAttribute(attr));
+      if (!userName) {
+        observer.error("userName required");
+      }
 
-          this.userPool.signUp(userDetails.Username, userDetails.Password, cognitoAttributes, [], (err, result) => {
-            if (err) {
-              reject(err);
-            }
+      if (!password) {
+        observer.error("password is required");
+      }
 
-            if (result) {
-              resolve(result);
-            }
-          });
-        } catch (err) {
-          reject(err);
+      if (attributes) {
+        cognitoAttributes = attributes.map(attr => new CognitoUserAttribute(attr));
+      }
+
+      this.userPool.signUp(userName, password, cognitoAttributes, [], (error, result) => {
+        if (error) {
+          observer.error(error);
+        } else {
+          observer.next(result as ISignUpResult);
         }
       })
-    );
+    })
   }
 
-  /**
-   * Confirms a registered user using code received by email or SMS
-   *
-   * @param userName user name
-   * @param confirmationCode confirmation code received via email
-   */
+  /** Confirms a registered user using code received by email or SMS */
   public confirmRegisteredUser(userName: string, confirmationCode: string): Observable<void> {
     return from(
       new Promise<void>((resolve, reject) => {
@@ -168,14 +153,13 @@ export class CognitoService {
 
           cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: cognitoUserSession => {
-              this.pSession = cognitoUserSession;
-              this.pSession$.next(cognitoUserSession);
+              this.session.next(cognitoUserSession);
               // TODO Manage new credentials https://www.npmjs.com/package/amazon-cognito-identity-js
               resolve('SUCCESS');
             },
             onFailure: error => {
               reject(error);
-              this.pSession$.next(null);
+              this.session.next(null);
             },
             newPasswordRequired: (_: unknown, __: unknown) => {
               resolve('NEW_PASSWORD_REQUIRED');
@@ -189,41 +173,63 @@ export class CognitoService {
     );
   }
 
-  /** Authenticate the user on current Session */
-  public getCurrentUserSession(): Observable<GetCurrentSessionResponse> {
+  /**
+   * Check user in local storage and return the session
+   * @returns True: Valid Session | False: No valid session
+   */
+  public getCurrentUserSession(): Observable<boolean> {
 
-    return from(
-      new Promise<GetCurrentSessionResponse>((resolve, reject) => {
+    return new Observable(observer => {1
 
-        try {
+      if (!this.currentUser) {
+        observer.next(false)
+      } else {
 
-          if (!this.currentUser) {
-            resolve('NO_USER_IN_SESSION');
-          } else {
+        this.currentUser.getSession((error: Error | null, session: CognitoUserSession | null) => {
 
-            this.currentUser.getSession((error: Error, session: CognitoUserSession | null) => {
-
-              if (error) {
-                reject(error);
-              } else if (session && session.isValid()) {
-                this.pSession = session;
-                this.pSession$.next(session);
-                resolve('SUCCESS');
-              }
-
-              this.pSession$.next(null);
-              resolve('SESSION_INVALID');
-
-            });
+          if (error) {
+            observer.error(error);
           }
 
-        } catch (error) {
+          if (session) {
 
-          this.pSession$.next(null);
-          reject(error);
-        }
-      })
-    );
+            this.session.next(session);
+
+            if (session.isValid()) {
+              observer.next(true);
+            }
+
+          }
+
+          this.session.next(null);
+          observer.next(false);
+        })
+      }
+
+    })
+  }
+
+  /** Delete the current authenticated user */
+  public deleteUser(): Observable<string> {
+
+    return new Observable(observer => {
+
+      if (!this.currentUser) {
+        observer.error("No authenticated user");
+      } else {
+
+        this.currentUser.deleteUser((error, result) => {
+          if (error) {
+            observer.error(error)
+          } else {
+            observer.next(result)
+          }
+        })
+
+      }
+
+    })
+
   }
 
 
@@ -244,8 +250,7 @@ export class CognitoService {
           } else {
             cognitoUser.completeNewPasswordChallenge(authenticationDetailsData.Password, null, {
               onSuccess: userSession => {
-                this.pSession = userSession;
-                this.pSession$.next(userSession);
+                this.session.next(userSession);
                 resolve();
               },
               onFailure: error => {
@@ -261,30 +266,22 @@ export class CognitoService {
     );
   }
 
-  /** Logout current User */
-  public logout(): Observable<void> {
+  /** SignOut current User */
+  public signOut(): Observable<void> {
 
-    return from(
-      new Promise<void>((resolve, reject) => {
+    return new Observable(observer => {
 
-        try {
+      const cognitoUser = this.userPool.getCurrentUser();
 
-          const cognitoUser = this.userPool.getCurrentUser();
+      if (cognitoUser) {
+        cognitoUser.signOut();
+        this.session.next(null);
+        observer.next();
+      }
 
-          if (cognitoUser) {
-            cognitoUser.signOut();
-            this.pSession = null;
-            this.pSession$.next(null);
-            resolve();
-          } else {
-            reject('No user signed in');
-          }
+      observer.error('No User Loged In');
 
-        } catch (err) {
-          reject(err);
-        }
+    });
 
-      })
-    );
   }
 }

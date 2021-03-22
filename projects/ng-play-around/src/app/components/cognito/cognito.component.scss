@@ -1,0 +1,45 @@
+:host {
+  display: block;
+  width: 450px;
+}
+
+h1 {
+  margin-bottom: 3rem;
+}
+
+.user-status {
+  border: 1px solid grey;
+  padding: 1rem;
+  margin-bottom: 3rem;
+  border-radius: 4px;
+  position: relative;
+
+  h2 {
+    position: absolute;
+    top: -0.5em;
+    left: 1rem;
+    line-height: 1;
+    padding: 0 4px;
+    margin: 0;
+    background: white;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+mat-form-field {
+  width: 250px;
+}
+
+.buttons {
+  display: flex;
+
+  > button:not(:first-child) {
+    margin-left: 1rem;
+  }
+}
