@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { VideoJsPlayer, VideoJsPlayerOptions, VideoJsPlayerPluginOptions } from 'video.js';
 import videojs from 'video.js';
+import 'videojs-landscape-fullscreen'
 
 @Component({
   selector: 'ng-videojs',
@@ -25,8 +26,18 @@ export class NgVideojsComponent implements OnInit, OnDestroy {
 
     if (this.target) {
       this.player = videojs(this.target.nativeElement, this.options, () => {
-        console.warn(this.player)
+        console.warn(this)
       });
+
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      this.player.landscapeFullscreen({
+      fullscreen: {
+        enterOnRotate: true,
+        alwaysInLandscapeMode: true,
+        iOS: true
+      }
+    })
     }
   }
 

@@ -12,15 +12,10 @@ export class VideojsComponent implements OnInit {
 
   ngOnInit(): void {
     this.options = {
-      autoplay: false,
+      autoplay: true,
       bigPlayButton: true,
       controls: true,
-      muted: true,
-      userActions: {
-        doubleClick: (event) => {
-          console.warn(event);
-        }
-      },
+      muted: false,
       sources: [{
         src: '/assets/video/Lorn-Acid-Rain.mp4',
         type: 'video/mp4'

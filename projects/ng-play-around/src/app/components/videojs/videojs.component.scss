@@ -3,8 +3,15 @@
 }
 
 .video-container {
-  width: 100%;
-  padding-top: calc(100% * 9 / 16);
-  height: 0;
+  width: 100vw;
+  padding-top: calc(100vw * 9 / 16);
   position: relative;
+}
+
+ng-videojs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
