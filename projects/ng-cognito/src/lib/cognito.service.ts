@@ -13,6 +13,7 @@ import {
   ICognitoUserData,
   ISignUpResult
 } from 'amazon-cognito-identity-js';
+import { AuthenticateForm } from './authenticate-form';
 
 export type AuthenticateResponse = 'SUCCESS' | 'NEW_PASSWORD_REQUIRED';
 export type GetCurrentSessionResponse = 'SUCCESS' | 'NO_USER_IN_SESSION' | 'SESSION_INVALID';
@@ -26,6 +27,8 @@ export interface ICognitoSignupParams {
   providedIn: 'root'
 })
 export class CognitoService {
+
+  authtenticateForm = new AuthenticateForm({ password: '', userName: '' });
 
   /** Cognito User Session observable */
   private session = new BehaviorSubject<CognitoUserSession | null>(null);

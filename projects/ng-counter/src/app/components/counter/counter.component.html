@@ -1,0 +1,19 @@
+<mat-card [@fadeIn]>
+  <mat-card-title>
+    <input #titleRef class="title" type="text" [(ngModel)]="title" (click)="onTitleClick()">
+  </mat-card-title>
+  <mat-card-content>
+    <p class="counter">{{counter}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button class="green" (click)="increment(1)"><mat-icon>add</mat-icon></button>
+    <button mat-raised-button class="red" (click)="increment(-1)"><mat-icon>remove</mat-icon></button>
+  </mat-card-actions>
+  <button mat-icon-button class="add-child-button" (click)="addChild()">
+    <mat-icon>add_circle_outline</mat-icon>
+  </button>
+</mat-card>
+
+<div class="childs" *ngIf="childs">
+  <ng-counter *ngFor="let counter of childs; let i = index" title="{{title}} #{{i + 1}}" (incrementParent)="increment($event)"></ng-counter>
+</div>

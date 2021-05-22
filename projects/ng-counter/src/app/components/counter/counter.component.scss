@@ -1,0 +1,60 @@
+:host {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.counter {
+  font-size: 64px;
+  text-align: center;
+  line-height: 1;
+}
+
+.mat-card {
+  position: relative;
+  width: 150px;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+}
+
+.mat-card-content {
+  margin-bottom: 0;
+}
+
+.mat-card-actions {
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  .mat-raised-button {
+    margin: 0;
+  }
+}
+
+.add-child-button {
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translate(-50%, 100%);
+}
+
+.green {
+  background-color: #00cc00;
+}
+
+.red {
+  background-color: #cc0000;
+}
+
+.childs {
+  margin-top: 3rem;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  gap: 1rem;
+}
