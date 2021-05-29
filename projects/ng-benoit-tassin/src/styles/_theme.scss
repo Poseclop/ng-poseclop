@@ -1,12 +1,13 @@
+@use '~@angular/material' as mat;
 @use '~@angular/material/theming';
 
 @include theming.mat-core();
 
-$ng-benoit-tassin-primary: theming.mat-palette(theming.$mat-teal);
-$ng-benoit-tassin-accent: theming.mat-palette(theming.$mat-light-blue);
-$ng-benoit-tassin-warn: theming.mat-palette(theming.$mat-red);
+$ng-benoit-tassin-primary: theming.mat.define-palette(theming.mat.$teal-palette);
+$ng-benoit-tassin-accent: theming.mat.define-palette(theming.mat.$light-blue-palette);
+$ng-benoit-tassin-warn: theming.mat.define-palette(theming.mat.$red-palette);
 
-$ng-benoit-tassin-theme: theming.mat-light-theme((
+$ng-benoit-tassin-theme: theming.mat.define-light-theme((
   color: (
     primary: $ng-benoit-tassin-primary,
     accent: $ng-benoit-tassin-accent,

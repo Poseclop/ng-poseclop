@@ -20,7 +20,10 @@
           "error",
           {
             "type": "element",
-            "prefix": ["ng", "app"],
+            "prefix": [
+              "ng",
+              "app"
+            ],
             "style": "kebab-case"
           }
         ],

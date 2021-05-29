@@ -19,7 +19,7 @@ import { bounce, flash, pulse, rubberBand, shakeX } from 'projects/ng-animations
     ]),
     trigger('flash', [
       transition('* => *', [
-        animate(".5s", flash)
+        animate(".5s", flash) 
       ])
     ]),
     trigger('pulse', [

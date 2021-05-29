@@ -20,7 +20,10 @@
           "error",
           {
             "type": "element",
-            "prefix": ["lib", "ng"],
+            "prefix": [
+              "lib",
+              "ng"
+            ],
             "style": "kebab-case"
           }
         ],

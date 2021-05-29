@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @use '~@angular/material/theming';
 
 header { 
@@ -33,7 +34,7 @@ header {
         
 
         &.active {
-            color: theming.mat-color(theming.$mat-teal, 700);
+            color: theming.mat.get-color-from-palette(theming.mat.$teal-palette, 700);
             font-weight: 500;
         }
 

@@ -21,7 +21,10 @@
           "error",
           {
             "type": "element",
-            "prefix": ["app", "core"],
+            "prefix": [
+              "app",
+              "core"
+            ],
             "style": "kebab-case"
           }
         ],
@@ -34,7 +37,9 @@
           }
         ],
         "no-shadow": "off",
-        "@typescript-eslint/no-shadow": ["error"]
+        "@typescript-eslint/no-shadow": [
+          "error"
+        ]
       }
     },
     {

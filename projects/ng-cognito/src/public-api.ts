@@ -9,3 +9,4 @@ export * from './lib/logged.guard';
 export * from './lib/non-logged.guard';
 export * from './lib/cognito.interceptor';
 export * from './lib/cognito.service';
+export * from './lib/authenticate-form';

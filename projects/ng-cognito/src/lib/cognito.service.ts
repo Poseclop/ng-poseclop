@@ -70,10 +70,12 @@ export class CognitoService {
 
       if (!userName) {
         observer.error("userName required");
+        return;
       }
 
       if (!password) {
         observer.error("password is required");
+        return;
       }
 
       if (attributes) {
@@ -83,8 +85,10 @@ export class CognitoService {
       this.userPool.signUp(userName, password, cognitoAttributes, [], (error, result) => {
         if (error) {
           observer.error(error);
+          return;
         } else {
           observer.next(result as ISignUpResult);
+          return;
         }
       })
     })
@@ -192,6 +196,7 @@ export class CognitoService {
 
           if (error) {
             observer.error(error);
+            return;
           }
 
           if (session) {
@@ -200,12 +205,14 @@ export class CognitoService {
 
             if (session.isValid()) {
               observer.next(true);
+              return;
             }
 
           }
 
           this.session.next(null);
           observer.next(false);
+          return;
         })
       }
 
@@ -219,13 +226,16 @@ export class CognitoService {
 
       if (!this.currentUser) {
         observer.error("No authenticated user");
+        return;
       } else {
 
         this.currentUser.deleteUser((error, result) => {
           if (error) {
             observer.error(error)
+            return;
           } else {
-            observer.next(result)
+            observer.next(result);
+            return;
           }
         })
 
@@ -280,10 +290,11 @@ export class CognitoService {
         cognitoUser.signOut();
         this.session.next(null);
         observer.next();
+        return;
       }
 
       observer.error('No User Loged In');
-
+      return;
     });
 
   }

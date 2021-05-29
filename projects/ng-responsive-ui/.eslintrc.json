@@ -28,7 +28,10 @@
           "error",
           {
             "type": "attribute",
-            "prefix": ["lib", "responsive"],
+            "prefix": [
+              "lib",
+              "responsive"
+            ],
             "style": "camelCase"
           }
         ]

@@ -11,13 +11,15 @@ import { Observable, of } from 'rxjs';
 import { CognitoService } from './cognito.service';
 import { exhaustMap, take } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CognitoInterceptor implements HttpInterceptor {
 
   constructor(private cognito: CognitoService) { }
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
+    console.warn("WTGF")
     return of(this.cognito.token).pipe(
       take(1),
       exhaustMap((token: string | null) => {
